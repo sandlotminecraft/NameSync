@@ -239,8 +239,9 @@ public class JoinListener implements Listener {
                     }
 
                     // If they are a Bedrock user, update their Xuid and Texture Id
+                    // Match on UUID when we have one, so a gamertag change still finds the row
                     if (isBedrockPlayer) {
-                        sql = "UPDATE " + xfUserTable + " SET " + xfGroupColumn + " = ?, " + xfUuidColumn + " = ?, " + xfXuidColumn + " = ?, " + xfTextureIdColumn + " = ?, " + xfUsernameColumn + " = ? WHERE " + xfUsernameColumn + " = ?";
+                        sql = "UPDATE " + xfUserTable + " SET " + xfGroupColumn + " = ?, " + xfUuidColumn + " = ?, " + xfXuidColumn + " = ?, " + xfTextureIdColumn + " = ?, " + xfUsernameColumn + " = ? WHERE " + (xfHasUuid ? xfUuidColumn : xfUsernameColumn) + " = ?";
 					}
 
                     PreparedStatement update = connection.prepareStatement(sql);
@@ -256,7 +257,7 @@ public class JoinListener implements Listener {
                         update.setString(3, playerXuid);
                         update.setString(4, playerTextureId);
 						update.setString(5, playerName);
-						update.setString(6, playerName);
+						update.setString(6, xfHasUuid ? playerUuid.toString() : playerName);
                         Bukkit.getServer().getLogger().log(Level.INFO, "[NameSync] Setting Texture ID to [" + playerTextureId + "] for player [" + playerName + "] with XUID [" + playerXuid + "]");
                     }
 

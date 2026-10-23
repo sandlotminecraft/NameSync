@@ -69,7 +69,8 @@ public class JoinListener implements Listener {
                 String user = settings.getConfig().getString("mysql.user");
                 String password = settings.getConfig().getString("mysql.password");
                 String database = settings.getConfig().getString("mysql.database");
-                String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
+                // This runs on the server thread, so bound how long an unreachable forum DB can stall it
+                String url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?connectTimeout=3000&socketTimeout=3000";
                 Connection connection = DriverManager.getConnection(url, user, password);
 
                 String xfUserTable = settings.getConfig().getString("xenforo.user_table");

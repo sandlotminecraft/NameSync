@@ -49,10 +49,11 @@ public class JoinListener implements Listener {
             FloodgatePlayer fp = api.getPlayer(playerUuid);
 
             // Bedrock player--update name to remove prefix and set xuid and texture id
-            if (fp != null) {
+            // A linked player joins as their Java account, so sync them as a Java player
+            if (fp != null && !fp.isLinked()) {
                 isBedrockPlayer = true;
                 playerXuid = fp.getXuid();
-                // Get name without Geyser prefix; a linked player already has their Java name, with no prefix
+                // Get name without Geyser prefix
                 String prefix = api.getPlayerPrefix();
                 if (!prefix.isEmpty() && playerName.startsWith(prefix)) {
                     playerName = playerName.substring(prefix.length());

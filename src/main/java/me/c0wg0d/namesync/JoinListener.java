@@ -52,8 +52,11 @@ public class JoinListener implements Listener {
             if (fp != null) {
                 isBedrockPlayer = true;
                 playerXuid = fp.getXuid();
-                // Get name without Geyser prefix
-                playerName = playerName.substring(1, playerName.length());
+                // Get name without Geyser prefix; a linked player already has their Java name, with no prefix
+                String prefix = api.getPlayerPrefix();
+                if (!prefix.isEmpty() && playerName.startsWith(prefix)) {
+                    playerName = playerName.substring(prefix.length());
+                }
 
             }
             if (!NameSyncApi.containsUUID(playerUuid)) {

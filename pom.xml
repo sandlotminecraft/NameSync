@@ -6,7 +6,7 @@
 
     <groupId>me.c0wg0d</groupId>
     <artifactId>NameSync</artifactId>
-    <version>1.3-sandlot.2</version>
+    <version>1.3-sandlot.3</version>
     <packaging>jar</packaging>
 
     <name>NameSync</name>
